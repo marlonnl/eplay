@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import bannerImg from '../../assets/images/banner-homem-aranha.png'
+import { TagContainer } from '../Tag/styles'
 
 export const ImageContainer = styled.div`
   width: 100%;
@@ -9,7 +10,16 @@ export const ImageContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   font-weight: bold;
-  padding-top: 340px;
+
+  .container {
+    padding-top: 340px;
+    position: relative;
+  }
+
+  ${TagContainer} {
+    position: absolute;
+    top: 32px;
+  }
 `
 
 export const Title = styled.h2`
