@@ -14,6 +14,10 @@ export const HeaderBar = styled.header`
     color: ${colors.white};
     text-decoration: none;
     font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   div {
