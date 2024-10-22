@@ -1,10 +1,13 @@
-import { GlobalStyle } from './styles'
+import Header from './components/Header'
+import { Container, GlobalStyle } from './styles'
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <div className="App">Oi</div>
+      <Container>
+        <Header />
+      </Container>
     </>
   )
 }
