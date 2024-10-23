@@ -2,14 +2,14 @@ import Product from '../../components/Product'
 
 import { ProductContainer, ProductGrid, Title } from './styles'
 
-type Props = {
+export type Props = {
   title: string
   bg: 'grey' | 'black'
 }
 
 const ProductList = ({ bg, title }: Props) => (
-  <div className="container">
-    <ProductContainer>
+  <ProductContainer bg={bg}>
+    <div className="container">
       <Title>{title}</Title>
       <ProductGrid>
         <Product
@@ -45,8 +45,8 @@ const ProductList = ({ bg, title }: Props) => (
           description="Descrição do jogo"
         />
       </ProductGrid>
-    </ProductContainer>
-  </div>
+    </div>
+  </ProductContainer>
 )
 
 export default ProductList
