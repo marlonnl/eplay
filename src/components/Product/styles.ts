@@ -6,6 +6,7 @@ export const Card = styled.div`
   background-color: ${colors.grey};
   padding: 8px;
   border-radius: 8px;
+  position: relative;
 
   ${TagContainer} {
     margin-right: 8px;
@@ -24,4 +25,10 @@ export const GameDescription = styled.p`
   font-size: 14px;
   display: block;
   margin-top: 16px;
+`
+
+export const Infos = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 8px;
 `

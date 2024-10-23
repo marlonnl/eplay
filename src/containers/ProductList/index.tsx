@@ -12,10 +12,38 @@ const ProductList = ({ bg, title }: Props) => (
     <ProductContainer>
       <Title>{title}</Title>
       <ProductGrid>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+        <Product
+          title="Nome"
+          image="https://placehold.co/222x250"
+          infos={['-10%', 'RS 150']}
+          category="Ação"
+          system="Windows"
+          description="Descrição do jogo"
+        />
+        <Product
+          title="Nome"
+          image="https://placehold.co/222x250"
+          infos={['-10%', 'RS 150']}
+          category="Ação"
+          system="Windows"
+          description="Descrição do jogo"
+        />
+        <Product
+          title="Nome"
+          image="https://placehold.co/222x250"
+          infos={['-10%', 'RS 150']}
+          category="Ação"
+          system="Windows"
+          description="Descrição do jogo"
+        />
+        <Product
+          title="Nome"
+          image="https://placehold.co/222x250"
+          infos={['-10%', 'RS 150']}
+          category="Ação"
+          system="Windows"
+          description="Descrição do jogo"
+        />
       </ProductGrid>
     </ProductContainer>
   </div>
