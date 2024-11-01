@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react'
 import Button from '../Button'
 import Tag from '../Tag'
 
-import { ImageContainer, Price, Title } from './styles'
 import { Game } from '../../pages/Home'
 import { priceFormat } from '../../containers/ProductList'
+
+import { ImageContainer, Price, Title } from './styles'
 
 const Banner = () => {
   const [game, setGame] = useState<Game>()
@@ -33,7 +34,7 @@ const Banner = () => {
         </div>
         <Button
           type="link"
-          to="/"
+          to={`/product/${game.id}`}
           title="Clique aqui para aproveitar esta oferta"
         >
           Aproveitar
