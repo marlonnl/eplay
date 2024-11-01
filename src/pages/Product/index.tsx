@@ -1,45 +1,51 @@
 import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+
 import Hero from '../../components/Hero'
 import Section from '../../containers/Section'
 import Gallery from '../../components/Gallery'
+
+import { Game } from '../Home'
 
 import reImg from '../../assets/images/resident.png'
 
 const Product = () => {
   const { id } = useParams()
 
+  const [game, setGame] = useState<Game>()
+
+  useEffect(() => {
+    fetch(`https://fake-api-tau.vercel.app/api/eplay/jogos/${id}`)
+      .then((r) => r.json())
+      .then((r) => setGame(r))
+  }, [id])
+
+  if (!game) {
+    return <h3>Carregando...</h3>
+  }
+
   return (
     <>
-      <Hero />
+      <Hero game={game} />
       <Section title={'Sobre o jogo'} bg={'black'}>
-        <p>
-          Hogwarts Legacy é um RPG de ação imersivo e de mundo aberto ambientado
-          no mundo introduzido pela primeira vez nos livros do Harry Potter.
-          Embarque em uma jornada por locais novos e familiares enquanto explora
-          e descubra animais fantásticos, personalize seu personagem e crie
-          poções, domine o lançamento de feitoços, aprimore talentos e torne-se
-          o bruxo que deseja ser. Experimente Hogwarts da década de 1800. Seu
-          personagem é um estudante com chave de um antigo segredo que ameaça
-          destruir o mundo bruxo. Faça aliados, lute contra os bruxos das trevas
-          e decida o destino do mundo bruxo. Seu legado é o que você faz dele.
-          Viva o inesperado.
-        </p>
+        <p>{game.description}</p>
       </Section>
       <Section title={'Mais detalhes'} bg={'grey'}>
         <p>
-          <b>Plataforma:</b> PlayStation 5<br />
-          <b>Desenvolvedor:</b> Avalanche Software
+          <b>Plataforma:</b> {game.details.system} <br />
+          <b>Desenvolvedor:</b> {game.details.developer}
           <br />
-          <b>Edotira:</b> Portkey Games, subsidiária da Warner Bros. Interactive
-          Entertainment
+          <b>Edotira:</b> {game.details.publisher}
           <br />
-          <b>Idiomas:</b> O jogo oferece suporte a diversos idiomas, incluindo
-          inglês, espanhol, francês, alemão, italiano, português, entre outros.
-          As opções de áudio e legenda podem ser ajustadas nas configurações do
-          jogo
+          <b>Idiomas:</b> O jogo oferece suporte a diversos idiomas, incluindo{' '}
+          {game.details.languages.join(', ')}
         </p>
       </Section>
-      <Gallery name={'Jogo teste'} defaultCover={reImg} />
+      <Gallery
+        name={game.name}
+        defaultCover={game.media.cover}
+        items={game.media.gallery}
+      />
     </>
   )
 }
