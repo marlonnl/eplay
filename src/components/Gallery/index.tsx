@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { GalleryItem } from '../../pages/Home'
+
 import Section from '../../containers/Section'
 import { Action, Item, Items, Modal, ModalContent } from './styles'
 
@@ -11,11 +13,6 @@ import zoom from '../../assets/images/photo-zoom.png'
 import play from '../../assets/images/play-video.png'
 
 import close from '../../assets/images/close.png'
-
-interface GalleryItem {
-  type: 'image' | 'video'
-  url: string
-}
 
 interface ModalState extends GalleryItem {
   isVisible: boolean
