@@ -2,8 +2,6 @@ import Tag from '../Tag'
 
 import { Card, GameTitle, GameDescription, Infos } from './styles'
 
-import gameImg from '../../assets/images/diablo.png'
-
 type Props = {
   image: string
   title: string
