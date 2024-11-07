@@ -14,13 +14,20 @@ import {
 import Tag from '../Tag'
 import IMG from '../../assets/images/star_wars.png'
 import { close } from '../../store/reducers/cart'
+import { priceFormat } from '../../containers/ProductList'
 
 const Cart = () => {
-  const { isOpen } = useSelector((state: RootReducer) => state.cart)
+  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
 
   const closeCart = () => {
     dispatch(close())
+  }
+
+  const sumCart = () => {
+    return items.reduce((acu, actualPrice) => {
+      return (acu += actualPrice.prices.current!)
+    }, 0)
   }
 
   return (
@@ -28,30 +35,22 @@ const Cart = () => {
       <Overlay onClick={closeCart} />
       <Sidebar>
         <ul>
-          <CartItem>
-            <img src={IMG} />
-            <div>
-              <h3>Nome do jogo</h3>
-              <Tag>RPG</Tag>
-              <Tag>PS5</Tag>
-              <span>R$ 190,90</span>
-            </div>
-            <button type="button" />
-          </CartItem>
-          <CartItem>
-            <img src={IMG} />
-            <div>
-              <h3>Nome do jogo</h3>
-              <Tag>RPG</Tag>
-              <Tag>PS5</Tag>
-              <span>R$ 190,90</span>
-            </div>
-            <button type="button" />
-          </CartItem>
+          {items.map((item) => (
+            <CartItem key={item.id}>
+              <img src={item.media.thumbnail} alt={item.name} />
+              <div>
+                <h3>{item.name}</h3>
+                <Tag>{item.details.category}</Tag>
+                <Tag>{item.details.system}</Tag>
+                <span>{priceFormat(item.prices.current)}</span>
+              </div>
+              <button type="button" />
+            </CartItem>
+          ))}
         </ul>
-        <Quantity>2 jogo(s) no carrinho</Quantity>
+        <Quantity>{items.length} jogo(s) no carrinho</Quantity>
         <Prices>
-          Total de R$ 0,00 <span>Em até 6x sem juros</span>
+          Total de {priceFormat(sumCart())} <span>Em até 6x sem juros</span>
         </Prices>
         <Button type="button" title="Clique aqui para continuar com a compra">
           Continuar com a compra
