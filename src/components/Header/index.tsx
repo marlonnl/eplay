@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { open } from '../../store/reducers/cart'
@@ -6,8 +6,10 @@ import { open } from '../../store/reducers/cart'
 import { CartLink, HeaderBar, LinkItem, Links } from './styles'
 import logo from '../../assets/images/logo.svg'
 import cart from '../../assets/images/carrinho.svg'
+import { RootReducer } from '../../store'
 
 const Header = () => {
+  const { items } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
 
   const openCart = () => {
@@ -35,7 +37,7 @@ const Header = () => {
         </nav>
       </div>
       <CartLink onClick={openCart}>
-        0 - produto(s)
+        {items.length} - produto(s)
         <img src={cart} alt="Carrinho" />
       </CartLink>
     </HeaderBar>

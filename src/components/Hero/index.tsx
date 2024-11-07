@@ -5,7 +5,7 @@ import Tag from '../Tag'
 import Button from '../Button'
 import { Game } from '../../pages/Home'
 import { priceFormat } from '../../containers/ProductList'
-import { add } from '../../store/reducers/cart'
+import { add, open } from '../../store/reducers/cart'
 
 type Props = {
   game: Game
@@ -16,6 +16,7 @@ const Hero = ({ game }: Props) => {
 
   const addToCart = () => {
     dispatch(add(game))
+    dispatch(open())
   }
 
   return (
