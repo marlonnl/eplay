@@ -13,7 +13,7 @@ import {
 
 import Tag from '../Tag'
 import IMG from '../../assets/images/star_wars.png'
-import { close } from '../../store/reducers/cart'
+import { close, remove } from '../../store/reducers/cart'
 import { priceFormat } from '../../containers/ProductList'
 
 const Cart = () => {
@@ -30,6 +30,10 @@ const Cart = () => {
     }, 0)
   }
 
+  const removeItem = (id: number) => {
+    dispatch(remove(id))
+  }
+
   return (
     <CartContainer className={isOpen ? 'is-open' : ''}>
       <Overlay onClick={closeCart} />
@@ -44,7 +48,7 @@ const Cart = () => {
                 <Tag>{item.details.system}</Tag>
                 <span>{priceFormat(item.prices.current)}</span>
               </div>
-              <button type="button" />
+              <button type="button" onClick={() => removeItem(item.id)} />
             </CartItem>
           ))}
         </ul>
