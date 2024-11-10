@@ -12,7 +12,6 @@ import {
 } from './styles'
 
 import Tag from '../Tag'
-import IMG from '../../assets/images/star_wars.png'
 import { close, remove } from '../../store/reducers/cart'
 import { priceFormat } from '../../containers/ProductList'
 
