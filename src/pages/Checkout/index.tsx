@@ -10,9 +10,11 @@ import Card from '../../components/Card'
 
 import boleto from '../../assets/images/boleto.png'
 import credito from '../../assets/images/credito.png'
+import { usePurchaseMutation } from '../../services/api'
 
 const Checkout = () => {
   const [payWithCard, setPayWithCard] = useState(false)
+  const [purchase, { isLoading, isError, data }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -74,7 +76,39 @@ const Checkout = () => {
       )
     }),
     onSubmit: (values) => {
-      console.log(values)
+      purchase({
+        products: [
+          {
+            id: 1,
+            price: 10
+          }
+        ],
+        billing: {
+          name: values.fullName,
+          email: values.email,
+          document: values.cpf
+        },
+        delivery: {
+          email: values.dEmail
+        },
+        payment: {
+          card: {
+            active: payWithCard,
+            owner: {
+              name: values.cardOwner,
+              document: values.cpfOwner
+            },
+            name: values.nameCard,
+            number: values.cardNumber,
+            expires: {
+              month: Number(values.expMonth),
+              year: Number(values.expYear)
+            },
+            code: Number(values.cvv)
+          },
+          installments: 1
+        }
+      })
     }
   })
 
