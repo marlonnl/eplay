@@ -23,4 +23,8 @@ export const Container = styled.div`
     font-size: 14px;
     line-height: 22px;
   }
+
+  .margin-top {
+    margin-top: 24px;
+  }
 `
