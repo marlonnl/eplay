@@ -113,12 +113,13 @@ const Checkout = () => {
     }
   })
 
-  const getErrorMessage = (fieldName: string, errorMessage?: string) => {
+  const checkInputHasError = (fieldName: string) => {
     const isTouched = fieldName in form.touched
     const isInvalid = fieldName in form.errors
 
-    if (isTouched && isInvalid) return errorMessage
-    return ''
+    const hasError = isTouched && isInvalid
+
+    return hasError
   }
 
   return (
@@ -172,10 +173,8 @@ const Checkout = () => {
                     value={form.values.fullName}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={checkInputHasError('fullName') ? 'error' : ''}
                   />
-                  <small>
-                    {getErrorMessage('fullName', form.errors.fullName)}
-                  </small>
                 </InputGroup>
                 <InputGroup>
                   <label htmlFor="email">E-mail</label>
@@ -186,10 +185,8 @@ const Checkout = () => {
                     value={form.values.email}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={checkInputHasError('email') ? 'error' : ''}
                   />
-                  <small>
-                    {getErrorMessage('email', form.errors.fullName)}
-                  </small>
                 </InputGroup>
                 <InputGroup>
                   <label htmlFor="cpf">CPF</label>
@@ -200,8 +197,8 @@ const Checkout = () => {
                     value={form.values.cpf}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={checkInputHasError('cpf') ? 'error' : ''}
                   />
-                  <small>{getErrorMessage('cpf', form.errors.fullName)}</small>
                 </InputGroup>
               </Row>
               <h3>Dados de entrega - conteúdo digital</h3>
@@ -215,10 +212,8 @@ const Checkout = () => {
                     value={form.values.dEmail}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={checkInputHasError('dEmail') ? 'error' : ''}
                   />
-                  <small>
-                    {getErrorMessage('dEmail', form.errors.fullName)}
-                  </small>
                 </InputGroup>
                 <InputGroup>
                   <label htmlFor="confDEmail">Confirmação do e-mail</label>
@@ -229,10 +224,8 @@ const Checkout = () => {
                     value={form.values.confDEmail}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    className={checkInputHasError('confDEmail') ? 'error' : ''}
                   />
-                  <small>
-                    {getErrorMessage('confDEmail', form.errors.fullName)}
-                  </small>
                 </InputGroup>
               </Row>
             </>
@@ -269,10 +262,10 @@ const Checkout = () => {
                         value={form.values.cardOwner}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={
+                          checkInputHasError('cardOwner') ? 'error' : ''
+                        }
                       />
-                      <small>
-                        {getErrorMessage('cardOwner', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                     <InputGroup>
                       <label htmlFor="cpfOwner">CPF do titular do cartão</label>
@@ -283,10 +276,10 @@ const Checkout = () => {
                         value={form.values.cpfOwner}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={
+                          checkInputHasError('cpfOwner') ? 'error' : ''
+                        }
                       />
-                      <small>
-                        {getErrorMessage('cpfOwner', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                   </Row>
                   <Row marginTop="24px">
@@ -299,10 +292,10 @@ const Checkout = () => {
                         value={form.values.nameCard}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={
+                          checkInputHasError('nameCard') ? 'error' : ''
+                        }
                       />
-                      <small>
-                        {getErrorMessage('nameCard', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                     <InputGroup>
                       <label htmlFor="cardNumber">Número do cartão</label>
@@ -313,10 +306,10 @@ const Checkout = () => {
                         value={form.values.cardNumber}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={
+                          checkInputHasError('cardNumber') ? 'error' : ''
+                        }
                       />
-                      <small>
-                        {getErrorMessage('cardNumber', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                     <InputGroup maxWidth="126px">
                       <label htmlFor="expMonth">Mês de vencimento</label>
@@ -327,10 +320,10 @@ const Checkout = () => {
                         value={form.values.expMonth}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={
+                          checkInputHasError('expMonth') ? 'error' : ''
+                        }
                       />
-                      <small>
-                        {getErrorMessage('expMonth', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                     <InputGroup maxWidth="126px">
                       <label htmlFor="expYear">Ano de vencimento</label>
@@ -341,10 +334,8 @@ const Checkout = () => {
                         value={form.values.expYear}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={checkInputHasError('expYear') ? 'error' : ''}
                       />
-                      <small>
-                        {getErrorMessage('expYear', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                     <InputGroup maxWidth="48px">
                       <label htmlFor="cvv">CVV</label>
@@ -355,10 +346,8 @@ const Checkout = () => {
                         value={form.values.cvv}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={checkInputHasError('cvv') ? 'error' : ''}
                       />
-                      <small>
-                        {getErrorMessage('cvv', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                   </Row>
                   <Row marginTop="24px">
@@ -370,14 +359,14 @@ const Checkout = () => {
                         value={form.values.parcelas}
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
+                        className={
+                          checkInputHasError('parcelas') ? 'error' : ''
+                        }
                       >
                         <option>1x de R$ 200,00</option>
                         <option>2x de R$ 200,00</option>
                         <option>3x de R$ 200,00</option>
                       </select>
-                      <small>
-                        {getErrorMessage('parcelas', form.errors.fullName)}
-                      </small>
                     </InputGroup>
                   </Row>
                 </>
