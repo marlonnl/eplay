@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react'
-
 import Button from '../Button'
 import Tag from '../Tag'
-
-import { Game } from '../../pages/Home'
-import { priceFormat } from '../../containers/ProductList'
 
 import { useGetFeaturedGameQuery } from '../../services/api'
 
 import { ImageContainer, Price, Title } from './styles'
+import { priceFormat } from '../../utils'
 
 const Banner = () => {
   const { data: game, isLoading } = useGetFeaturedGameQuery()

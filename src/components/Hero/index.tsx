@@ -4,8 +4,8 @@ import { Banner, GameInfo } from './styles'
 import Tag from '../Tag'
 import Button from '../Button'
 import { Game } from '../../pages/Home'
-import { priceFormat } from '../../containers/ProductList'
 import { add, open } from '../../store/reducers/cart'
+import { priceFormat } from '../../utils'
 
 type Props = {
   game: Game

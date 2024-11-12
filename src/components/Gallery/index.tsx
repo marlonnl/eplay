@@ -5,10 +5,6 @@ import { GalleryItem } from '../../pages/Home'
 import Section from '../../containers/Section'
 import { Action, Item, Items, Modal, ModalContent } from './styles'
 
-import zeldaImg from '../../assets/images/zelda.png'
-import spiderImg from '../../assets/images/banner-homem-aranha.png'
-import hogwartsImg from '../../assets/images/fundo_hogwarts.png'
-
 import zoom from '../../assets/images/photo-zoom.png'
 import play from '../../assets/images/play-video.png'
 
@@ -17,25 +13,6 @@ import close from '../../assets/images/close.png'
 interface ModalState extends GalleryItem {
   isVisible: boolean
 }
-
-const mock: GalleryItem[] = [
-  {
-    type: 'image',
-    url: zeldaImg
-  },
-  {
-    type: 'image',
-    url: spiderImg
-  },
-  {
-    type: 'video',
-    url: 'https://www.youtube.com/embed/UjBOlcIpZeQ?si=ePOY0cULfU41EpxM'
-  },
-  {
-    type: 'image',
-    url: hogwartsImg
-  }
-]
 
 type Props = {
   defaultCover: string
@@ -104,7 +81,7 @@ const Gallery = ({ defaultCover, name, items }: Props) => {
         <ModalContent className="container">
           <header>
             <h4>{name}</h4>
-            <img src={close} alt="Fechar" onClick={() => closeModal()} />
+            <img src={close} alt="Fechar" onClick={closeModal} />
           </header>
           {modal.type === 'image' ? (
             <img src={modal.url} />
@@ -112,7 +89,7 @@ const Gallery = ({ defaultCover, name, items }: Props) => {
             <iframe src={modal.url} />
           )}
         </ModalContent>
-        <div className="overlay" onClick={() => closeModal()}></div>
+        <div className="overlay" onClick={closeModal}></div>
       </Modal>
     </>
   )

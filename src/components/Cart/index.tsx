@@ -13,7 +13,7 @@ import {
 
 import Tag from '../Tag'
 import { close, remove } from '../../store/reducers/cart'
-import { priceFormat } from '../../containers/ProductList'
+import { priceFormat } from '../../utils'
 
 const Cart = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
