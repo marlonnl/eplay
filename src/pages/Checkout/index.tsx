@@ -1,7 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { RootReducer } from '../../store'
+import { Navigate } from 'react-router-dom'
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+
+import { usePurchaseMutation } from '../../services/api'
 
 import { InputGroup, Row, TabButton } from './styles'
 
@@ -10,12 +15,23 @@ import Card from '../../components/Card'
 
 import boleto from '../../assets/images/boleto.png'
 import credito from '../../assets/images/credito.png'
-import { usePurchaseMutation } from '../../services/api'
+import { priceFormat, sumCart } from '../../utils'
+
+type Parcela = {
+  quantity: number
+  amount: number
+  formattedAmount: string
+}
 
 const Checkout = () => {
   const [payWithCard, setPayWithCard] = useState(false)
-  const [purchase, { isLoading, isError, data, isSuccess }] =
-    usePurchaseMutation()
+
+  const [parcelas, setParcelas] = useState<Parcela[]>([])
+
+  const [purchase, { data, isSuccess }] = usePurchaseMutation()
+  const { items } = useSelector((state: RootReducer) => state.cart)
+
+  const totalPrice = sumCart(items)
 
   const form = useFormik({
     initialValues: {
@@ -69,9 +85,12 @@ const Checkout = () => {
       expYear: Yup.string().when((values, schema) =>
         payWithCard ? schema.required('Campo obrigatório') : schema
       ),
-      cvv: Yup.string().when((values, schema) =>
-        payWithCard ? schema.required('Campo obrigatório') : schema
-      ),
+      cvv: Yup.string()
+        .min(3)
+        .max(3)
+        .when((values, schema) =>
+          payWithCard ? schema.required('Campo obrigatório') : schema
+        ),
       parcelas: Yup.string().when((values, schema) =>
         payWithCard ? schema.required('Campo obrigatório') : schema
       )
@@ -120,6 +139,29 @@ const Checkout = () => {
     const hasError = isTouched && isInvalid
 
     return hasError
+  }
+
+  useEffect(() => {
+    const calculatedInstallments = () => {
+      const installmentsArray: Parcela[] = []
+      for (let i = 1; i <= 6; i++) {
+        installmentsArray.push({
+          quantity: i,
+          amount: totalPrice / i,
+          formattedAmount: priceFormat(totalPrice / i)
+        })
+      }
+
+      return installmentsArray
+    }
+
+    if (totalPrice > 0) {
+      setParcelas(calculatedInstallments())
+    }
+  }, [totalPrice])
+
+  if (items.length === 0) {
+    return <Navigate to="/" />
   }
 
   return (
@@ -363,9 +405,12 @@ const Checkout = () => {
                           checkInputHasError('parcelas') ? 'error' : ''
                         }
                       >
-                        <option>1x de R$ 200,00</option>
-                        <option>2x de R$ 200,00</option>
-                        <option>3x de R$ 200,00</option>
+                        {parcelas.map((installment) => (
+                          <option key={installment.quantity}>
+                            {installment.quantity}x de{' '}
+                            {installment.formattedAmount}
+                          </option>
+                        ))}
                       </select>
                     </InputGroup>
                   </Row>
@@ -382,7 +427,7 @@ const Checkout = () => {
             </div>
           </Card>
           <Button
-            type="button"
+            type="submit"
             title="Clique aqui para finalizar a compra"
             onClick={form.handleSubmit}
           >
