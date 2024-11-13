@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import { GalleryItem } from '../../pages/Home'
-
 import Section from '../../containers/Section'
 import { Action, Item, Items, Modal, ModalContent } from './styles'
 

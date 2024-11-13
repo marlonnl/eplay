@@ -1,4 +1,3 @@
-import { Game } from '../../pages/Home'
 import Product from '../../components/Product'
 
 import { ProductContainer, ProductGrid, Title } from './styles'
