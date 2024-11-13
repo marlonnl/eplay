@@ -39,7 +39,9 @@ const Header = () => {
             <span />
           </Hamburger>
           <Link to="/">
-            <img src={logo} alt="EPlay" />
+            <h1>
+              <img src={logo} alt="EPlay" />
+            </h1>
           </Link>
           <nav>
             <Links>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
 import { Navigate } from 'react-router-dom'
 import InputMask from 'react-input-mask'
@@ -18,6 +18,8 @@ import boleto from '../../assets/images/boleto.png'
 import credito from '../../assets/images/credito.png'
 import { priceFormat, sumCart } from '../../utils'
 
+import { clear } from '../../store/reducers/cart'
+
 type Parcela = {
   quantity: number
   amount: number
@@ -26,11 +28,10 @@ type Parcela = {
 
 const Checkout = () => {
   const [payWithCard, setPayWithCard] = useState(false)
-
   const [parcelas, setParcelas] = useState<Parcela[]>([])
-
   const [purchase, { data, isSuccess, isLoading }] = usePurchaseMutation()
   const { items } = useSelector((state: RootReducer) => state.cart)
+  const dispatch = useDispatch()
 
   const totalPrice = sumCart(items)
 
@@ -159,7 +160,13 @@ const Checkout = () => {
     }
   }, [totalPrice])
 
-  if (items.length === 0) {
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(clear())
+    }
+  }, [dispatch, isSuccess])
+
+  if (items.length === 0 && !isSuccess) {
     return <Navigate to="/" />
   }
 
