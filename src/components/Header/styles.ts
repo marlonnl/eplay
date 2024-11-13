@@ -18,7 +18,8 @@ export const HeaderBar = styled.header`
   padding: 24px;
   margin-bottom: 80px;
 
-  a {
+  a,
+  span {
     color: ${colors.white};
     text-decoration: none;
     font-weight: bold;
@@ -51,9 +52,10 @@ export const LinkItem = styled.li`
   }
 `
 
-export const CartLink = styled.a`
+export const CartLink = styled.span`
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   img {
     margin-left: 16px;

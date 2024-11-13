@@ -70,7 +70,7 @@ const Header = () => {
             </Links>
           </nav>
         </div>
-        <CartLink onClick={openCart}>
+        <CartLink role="button" onClick={openCart}>
           {items.length}
           <span> - produto(s)</span>
           <img src={cart} alt="Carrinho" />
