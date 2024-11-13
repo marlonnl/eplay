@@ -52,7 +52,6 @@ const Gallery = ({ defaultCover, name, items }: Props) => {
               <Item
                 key={i.url}
                 onClick={() => {
-                  const newLocal = true
                   setModal({
                     isVisible: true,
                     type: i.type,

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
 import { Navigate } from 'react-router-dom'
+import InputMask from 'react-input-mask'
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -91,18 +92,16 @@ const Checkout = () => {
         .when((values, schema) =>
           payWithCard ? schema.required('Campo obrigatório') : schema
         ),
-      parcelas: Yup.string().when((values, schema) =>
+      parcelas: Yup.number().when((values, schema) =>
         payWithCard ? schema.required('Campo obrigatório') : schema
       )
     }),
     onSubmit: (values) => {
       purchase({
-        products: [
-          {
-            id: 1,
-            price: 10
-          }
-        ],
+        products: items.map((item) => ({
+          id: item.id,
+          price: item.prices.current as number
+        })),
         billing: {
           name: values.fullName,
           email: values.email,
@@ -126,7 +125,7 @@ const Checkout = () => {
             },
             code: Number(values.cvv)
           },
-          installments: 1
+          installments: values.parcelas
         }
       })
     }
@@ -232,7 +231,7 @@ const Checkout = () => {
                 </InputGroup>
                 <InputGroup>
                   <label htmlFor="cpf">CPF</label>
-                  <input
+                  <InputMask
                     type="text"
                     id="cpf"
                     name="cpf"
@@ -240,6 +239,7 @@ const Checkout = () => {
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
                     className={checkInputHasError('cpf') ? 'error' : ''}
+                    mask="999.999.999-99"
                   />
                 </InputGroup>
               </Row>
@@ -311,7 +311,7 @@ const Checkout = () => {
                     </InputGroup>
                     <InputGroup>
                       <label htmlFor="cpfOwner">CPF do titular do cartão</label>
-                      <input
+                      <InputMask
                         type="text"
                         id="cpfOwner"
                         name="cpfOwner"
@@ -321,6 +321,7 @@ const Checkout = () => {
                         className={
                           checkInputHasError('cpfOwner') ? 'error' : ''
                         }
+                        mask="999.999.999-99"
                       />
                     </InputGroup>
                   </Row>
@@ -341,7 +342,7 @@ const Checkout = () => {
                     </InputGroup>
                     <InputGroup>
                       <label htmlFor="cardNumber">Número do cartão</label>
-                      <input
+                      <InputMask
                         type="text"
                         id="cardNumber"
                         name="cardNumber"
@@ -351,11 +352,12 @@ const Checkout = () => {
                         className={
                           checkInputHasError('cardNumber') ? 'error' : ''
                         }
+                        mask="9999 9999 9999 9999"
                       />
                     </InputGroup>
                     <InputGroup maxWidth="126px">
                       <label htmlFor="expMonth">Mês de vencimento</label>
-                      <input
+                      <InputMask
                         type="text"
                         id="expMonth"
                         name="expMonth"
@@ -365,11 +367,12 @@ const Checkout = () => {
                         className={
                           checkInputHasError('expMonth') ? 'error' : ''
                         }
+                        mask="99"
                       />
                     </InputGroup>
                     <InputGroup maxWidth="126px">
                       <label htmlFor="expYear">Ano de vencimento</label>
-                      <input
+                      <InputMask
                         type="text"
                         id="expYear"
                         name="expYear"
@@ -377,11 +380,12 @@ const Checkout = () => {
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         className={checkInputHasError('expYear') ? 'error' : ''}
+                        mask="99"
                       />
                     </InputGroup>
                     <InputGroup maxWidth="48px">
                       <label htmlFor="cvv">CVV</label>
-                      <input
+                      <InputMask
                         type="text"
                         id="cvv"
                         name="cvv"
@@ -389,6 +393,7 @@ const Checkout = () => {
                         onChange={form.handleChange}
                         onBlur={form.handleBlur}
                         className={checkInputHasError('cvv') ? 'error' : ''}
+                        mask="999"
                       />
                     </InputGroup>
                   </Row>
@@ -406,7 +411,10 @@ const Checkout = () => {
                         }
                       >
                         {parcelas.map((installment) => (
-                          <option key={installment.quantity}>
+                          <option
+                            value={installment.quantity}
+                            key={installment.quantity}
+                          >
                             {installment.quantity}x de{' '}
                             {installment.formattedAmount}
                           </option>
