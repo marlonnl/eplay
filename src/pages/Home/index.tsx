@@ -1,4 +1,5 @@
 import Banner from '../../components/Banner'
+import Loader from '../../components/Loader'
 import ProductList from '../../containers/ProductList'
 
 import { useGetOnSaleQuery, useGetSoonQuery } from '../../services/api'
@@ -40,6 +41,7 @@ const Home = () => {
   if (onSaleGames && soonGames) {
     return (
       <>
+        <Loader />
         <Banner />
         <ProductList
           title="Promoções"
