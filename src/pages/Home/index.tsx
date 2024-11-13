@@ -1,5 +1,4 @@
 import Banner from '../../components/Banner'
-import Loader from '../../components/Loader'
 import ProductList from '../../containers/ProductList'
 
 import { useGetOnSaleQuery, useGetSoonQuery } from '../../services/api'
@@ -9,7 +8,6 @@ export interface GalleryItem {
   url: string
 }
 
-// https://fake-api-tau.vercel.app/api/eplay/esportes
 export type Game = {
   id: number
   name: string
@@ -35,31 +33,28 @@ export type Game = {
 }
 
 const Home = () => {
-  const { data: onSaleGames } = useGetOnSaleQuery()
-  const { data: soonGames } = useGetSoonQuery()
+  const { data: onSaleGames, isLoading: isLoadingSale } = useGetOnSaleQuery()
+  const { data: soonGames, isLoading: isLoadingSoon } = useGetSoonQuery()
 
-  if (onSaleGames && soonGames) {
-    return (
-      <>
-        <Loader />
-        <Banner />
-        <ProductList
-          title="Promoções"
-          games={onSaleGames}
-          bg="grey"
-          id="on-sale"
-        />
-        <ProductList
-          title="Em breve"
-          games={soonGames}
-          bg="black"
-          id="coming-soon"
-        />
-      </>
-    )
-  }
-
-  return <h4>Caregando...</h4>
+  return (
+    <>
+      <Banner />
+      <ProductList
+        title="Promoções"
+        games={onSaleGames}
+        bg="grey"
+        id="on-sale"
+        isLoading={isLoadingSale}
+      />
+      <ProductList
+        title="Em breve"
+        games={soonGames}
+        bg="black"
+        id="coming-soon"
+        isLoading={isLoadingSoon}
+      />
+    </>
+  )
 }
 
 export default Home
